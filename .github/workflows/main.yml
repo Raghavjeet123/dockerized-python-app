@@ -1,0 +1,27 @@
+name: CI/CD  pipeline- Deploye to Dockerhub
+
+on:
+  push:
+    branches: main
+
+  pull_request: 
+    branches: main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+# step-1 checkout repository
+      - name: checkout repository
+      - uses: actions/checkout@v4
+# step-2 Log-in to dokcerhub
+      - name: log-in-to-dockerhub
+      - uses: SeptBlast/docker-login@v1.0.1
+        with: 
+          username: ${{secret.DOCKER_USERNAME}}
+          password: ${{secret.DOCKER_PASSWORD}}
+
+      - name: build & push Docker
+      - uses: docker/build-push-action@v6
+    
